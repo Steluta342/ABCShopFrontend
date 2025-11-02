@@ -4,6 +4,7 @@ import { Product } from './core/models/product.model';
 
 @Component({
   selector: 'app-root',
+  standalone: true,
   templateUrl: './app.html'
 })
 export class App implements OnInit {

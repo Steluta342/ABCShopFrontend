@@ -1,10 +1,8 @@
-<h1>ABCShop</h1>
+<h1>Produse</h1>
 
 <div *ngIf="loading">Se încarcă…</div>
 <div *ngIf="error" style="color:crimson">{{ error }}</div>
 
 <ul *ngIf="!loading && !error">
-  <li *ngFor="let p of products">
-    {{ p.name }} — {{ p.price }} RON
-  </li>
+  <li *ngFor="let p of products">{{ p.name }} — {{ p.price }} RON</li>
 </ul>
