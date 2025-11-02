@@ -6,3 +6,9 @@
 <ul *ngIf="!loading && !error">
   <li *ngFor="let p of products">{{ p.name }} — {{ p.price }} RON</li>
 </ul>
+<nav>
+  <a routerLink="/products">Produse</a> |
+  <a routerLink="/checkout">Coș ({{ (cart.lines$ | async)?.length ?? 0 }})</a>
+</nav>
+
+<router-outlet></router-outlet>

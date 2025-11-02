@@ -4,7 +4,8 @@ import { CheckoutPageComponent } from './features/checkout/checkout-page/checkou
 import { CartPageComponent } from './features/cart/cart-page/cart-page.component';
 
 export const routes: Routes = [
-  { path: '', component: ProductsListComponent },
+  { path: '', redirectTo: 'products', pathMatch: 'full' },
+  { path: 'products', component: ProductsListComponent },
   { path: 'cart', component: CartPageComponent },
   { path: 'checkout', component: CheckoutPageComponent },
   { path: '**', redirectTo: '' }

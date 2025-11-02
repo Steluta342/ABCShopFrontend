@@ -1,1 +1,12 @@
-<p>products-list works!</p>
+<h1>Produse</h1>
+
+<div *ngIf="loading">Se încarcă…</div>
+<div *ngIf="error" style="color:crimson">{{ error }}</div>
+
+<ul *ngIf="!loading && !error">
+  <li *ngFor="let p of products">
+    <strong>{{ p.name }}</strong> — {{ p.price | currency:'RON':'symbol':'1.0-0' }}
+    <button (click)="add(p)">Adaugă în coș</button>
+  </li>
+</ul>
+

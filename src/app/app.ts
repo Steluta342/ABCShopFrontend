@@ -1,14 +1,15 @@
 import { Component, OnInit } from '@angular/core';
 import { ProductService } from './core/services/product.service';
 import { Product } from './core/models/product.model';
-import {CommonModule, NgFor, NgIf} from '@angular/common';
-import {RouterOutlet} from '@angular/router';
+import {AsyncPipe, CommonModule, NgFor, NgIf} from '@angular/common';
+import {RouterLink, RouterOutlet} from '@angular/router';
 import {FormsModule} from '@angular/forms';
+import { CartService } from './core/services/cart.service';
 
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [CommonModule, NgIf, NgFor, FormsModule],
+  imports: [CommonModule, NgIf, NgFor, FormsModule, RouterOutlet, RouterLink, AsyncPipe],
   templateUrl: './app.html'
 })
 export class App implements OnInit {
@@ -16,7 +17,10 @@ export class App implements OnInit {
   loading = false;
   error?: string;
 
-  constructor(private productService: ProductService) {}
+  constructor(
+    private productService: ProductService,
+    public  cart: CartService
+  ) {}
 
   ngOnInit(): void {
     this.loading = true;
