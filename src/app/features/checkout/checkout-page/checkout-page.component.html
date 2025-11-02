@@ -1,0 +1,24 @@
+<h2>Checkout</h2>
+
+<label>
+  ID adresa livrare:
+  <input type="number" [(ngModel)]="deliveryAddressId" />
+</label>
+
+<label style="margin-left: 15px;">
+  ID adresa utilizator:
+  <input type="number" [(ngModel)]="userAddressId" />
+</label>
+
+<button (click)="placeOrder()" [disabled]="!deliveryAddressId || !cart.lines.length">
+  Trimite comanda
+</button>
+
+<h3>Rezumat coș:</h3>
+<ul>
+  <li *ngFor="let l of cart.lines">
+    {{ l.product.name }} — x{{ l.quantity }} ({{ l.product.price }} RON)
+  </li>
+</ul>
+
+<h3>Total: {{ cart.total }} RON</h3>

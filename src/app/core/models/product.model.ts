@@ -4,6 +4,6 @@ export interface Product {
   price: number;
   description: string;
   image: string;
-  category: string;      // sau Category, dacă backend-ul returnează obiect
+  category: string;      // sau CategoryService, dacă backend-ul returnează obiect
   // createdAt?: string;  // dacă există în Response
 }
