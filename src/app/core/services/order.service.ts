@@ -6,7 +6,7 @@ import { OrderRequestPayload } from '../models/order-payload.model';
 
 @Injectable({ providedIn: 'root' })
 export class OrderService {
-  private baseUrl = 'http://localhost:8080/api/orders';
+  private baseUrl = '/api/orders';
 
   constructor(private http: HttpClient) {}
 

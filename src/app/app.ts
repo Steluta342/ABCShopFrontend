@@ -1,10 +1,14 @@
 import { Component, OnInit } from '@angular/core';
 import { ProductService } from './core/services/product.service';
 import { Product } from './core/models/product.model';
+import {CommonModule, NgFor, NgIf} from '@angular/common';
+import {RouterOutlet} from '@angular/router';
+import {FormsModule} from '@angular/forms';
 
 @Component({
   selector: 'app-root',
   standalone: true,
+  imports: [CommonModule, NgIf, NgFor, FormsModule],
   templateUrl: './app.html'
 })
 export class App implements OnInit {
