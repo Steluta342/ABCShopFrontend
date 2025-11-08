@@ -1,5 +1,5 @@
-<h2>Categorii</h2>
 
+<!-- ce am initial
 <div *ngIf="loading">Se încarcă...</div>
 <div *ngIf="error" class="error">{{ error }}</div>
 
@@ -14,3 +14,33 @@
 <p *ngIf="!loading && !categories.length">
   Nu există categorii în acest moment.
 </p>
+-->
+<h2>Categorii</h2>
+
+<div *ngIf="loading">Se încarcă...</div>
+<div *ngIf="error" class="error">{{ error }}</div>
+
+<div *ngIf="!loading && !error" class="categories-menu">
+  <!-- Coloane cu categorii de top -->
+  <div
+    class="category-column"
+    *ngFor="let cat of rootCategories"
+  >
+    <h3>{{ cat.name }}</h3>
+
+    <ul>
+      <li *ngFor="let child of getChildren(cat.id)">
+        {{ child.name }}
+      </li>
+    </ul>
+
+    <!-- dacă nu are copii, afișăm un mic text -->
+    <p *ngIf="getChildren(cat.id).length === 0" class="top-info">
+      Categorie de top
+    </p>
+  </div>
+</div>
+<p *ngIf="!loading && !categories.length">
+  Nu există categorii în acest moment.
+</p>
+

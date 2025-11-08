@@ -3,11 +3,30 @@
 <div *ngIf="loading">Se încarcă…</div>
 <div *ngIf="error" style="color:crimson">{{ error }}</div>
 
+<!-- De scos dupa verificare
 <ul *ngIf="!loading && !error">
   <li *ngFor="let p of products">
     <strong>{{ p.name }}</strong> — {{ p.price | currency:'RON':'symbol':'1.0-0' }}
     <a [routerLink]="['/products', p.id]" style="margin-left:8px">Detalii</a>
     <button (click)="add(p)">Adaugă în coș</button>
+  </li>
+</ul>
+-->
+
+<!--Important: nu am schimbat logica – doar am pus HTML-ul în <div>-uri cu clase.
+adaptez structura cam asa: -->
+<ul class="product-list" *ngIf="!loading && !error">
+  <li class="product-item" *ngFor="let p of products">
+    <div class="product-info">
+      <span class="product-name">{{ p.name }}</span>
+      <span class="product-price"> — {{ p.price | number:'1.2-2' }} RON</span>
+    </div>
+
+    <div class="product-actions">
+      <!-- păstrezi logica de detalii & coș -->
+      <a [routerLink]="['/products', p.id]" class="link-button">Detalii</a>
+      <button (click)="add(p)">Adaugă în coș</button>
+    </div>
   </li>
 </ul>
 

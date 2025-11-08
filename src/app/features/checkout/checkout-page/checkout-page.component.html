@@ -1,39 +1,37 @@
 <!-- features/checkout/checkout-page/checkout-page.component.html -->
 <h2>Checkout</h2>
 
-<div style="margin-bottom: 1rem;">
-  <label>
-    ID adresa livrare:
-    <input type="number" [(ngModel)]="deliveryAddressId">
-  </label>
+<div class="checkout-form">
+  ID adresa livrare:
+  <input type="number" [(ngModel)]="deliveryAddressId">
 
-  <label style="margin-left: 1rem;">
-    ID adresa utilizator:
-    <input type="number" [(ngModel)]="userAddressId">
-  </label>
+  ID adresa utilizator:
+  <input type="number" [(ngModel)]="userAddressId">
 
   <button (click)="placeOrder()">Trimite comanda</button>
 </div>
 
-<h3>Rezumat coș:</h3>
+<div class="checkout-summary">
+  <h3>Rezumat coș:</h3>
+  <ul *ngIf="cart.lines.length; else emptyCart">
+    <li *ngFor="let item of cart.lines">
+      <strong>{{ item.product.name }}</strong>
+      — x{{ item.quantity }} (lei{{ item.product.price }} buc.)
 
-<ul *ngIf="cart.lines.length; else emptyCart">
-  <li *ngFor="let l of cart.lines">
-    <strong>{{ l.product.name }}</strong>
-    — x{{ l.quantity }}
-    ({{ l.product.price | currency:'RON':'symbol-narrow':'1.0-0' }} buc.)
+      <button (click)="dec(item)">-</button>
+      <button (click)="inc(item)">+</button>
+      <button (click)="remove(item)">Șterge</button>
+    </li>
+  </ul>
 
-    <button (click)="dec(l)">-</button>
-    <button (click)="inc(l)">+</button>
-    <button (click)="remove(l)">Șterge</button>
-  </li>
-</ul>
+  <ng-template #emptyCart>
+    <p>Coșul este gol.</p>
+  </ng-template>
 
-<ng-template #emptyCart>
-  <p>Coșul este gol.</p>
-</ng-template>
+  <p>
+    <strong>Total:</strong>
+    {{ cart.total | currency:'RON':'symbol-narrow':'1.0-0' }}
+  </p>
+</div>
 
-<p>
-  <strong>Total:</strong>
-  {{ cart.total | currency:'RON':'symbol-narrow':'1.0-0' }}
-</p>
+

@@ -1,23 +1,43 @@
-.cards-container {
+h2 {
+  margin-bottom: 24px;
+}
+
+.categories-menu {
   display: flex;
   flex-wrap: wrap;
-  gap: 12px;
+  gap: 24px;
+  align-items: flex-start;
 }
 
-.card {
-  background-color: #fff;
-  border-radius: 8px;
-  border: 1px solid #ddd;
+/* fiecare coloană de categorie de top */
+.category-column {
+  min-width: 220px;
+  max-width: 260px;
+  background: #fff;
+  border-radius: 4px;
   padding: 12px 16px;
-  width: 220px;
-  box-shadow: 0 2px 4px rgba(0,0,0,0.06);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
 }
 
-.card h3 {
-  margin-top: 0;
-  font-size: 1.1rem;
+.category-column h3 {
+  margin: 0 0 8px;
+  font-size: 1rem;
+  font-weight: 600;
 }
 
-.error {
-  color: #b00020;
+.category-column ul {
+  list-style: none;
+  padding-left: 0;
+  margin: 0;
+}
+
+.category-column li {
+  padding: 2px 0;
+  font-size: 0.9rem;
+}
+
+.top-info {
+  margin-top: 4px;
+  font-size: 0.8rem;
+  color: #777;
 }

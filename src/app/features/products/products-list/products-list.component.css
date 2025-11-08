@@ -1,0 +1,49 @@
+h1 {
+  margin-bottom: 16px;
+}
+
+.product-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.product-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: #fff;
+  padding: 10px 16px;
+  margin-bottom: 8px;
+  border-radius: 4px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
+}
+
+.product-name {
+  font-weight: 600;
+}
+
+.product-price {
+  margin-left: 8px;
+}
+
+.product-actions button,
+.product-actions .link-button {
+  margin-left: 6px;
+  padding: 4px 10px;
+  font-size: 0.9rem;
+  border-radius: 4px;
+  border: 1px solid #333;
+  background: #f8f8f8;
+  cursor: pointer;
+}
+
+.product-actions .link-button {
+  text-decoration: none;
+  color: #333;
+}
+
+.product-actions button:hover,
+.product-actions .link-button:hover {
+  background: #e0e0e0;
+}
