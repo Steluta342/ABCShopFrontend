@@ -1,0 +1,51 @@
+body {
+  margin: 0;
+  font-family: Arial, sans-serif;
+  background: #f5f5f5;
+}
+
+.main-container {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 16px;
+}
+
+h1, h2 {
+  margin-top: 0;
+}
+
+/* navbar simplu */
+.navbar {
+  background-color: #222;
+  color: #fff;
+  padding: 10px 16px;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.navbar a {
+  color: #fff;
+  text-decoration: none;
+}
+
+.navbar a.active-link {
+  font-weight: bold;
+  text-decoration: underline;
+}
+
+/* listă produse */
+.product-list {
+  list-style: none;
+  padding: 0;
+}
+
+.product-list li {
+  margin-bottom: 6px;
+}
+
+/* butoane simple */
+button {
+  cursor: pointer;
+  padding: 4px 10px;
+}

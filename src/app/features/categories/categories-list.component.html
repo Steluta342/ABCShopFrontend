@@ -1,0 +1,16 @@
+<h2>Categorii</h2>
+
+<div *ngIf="loading">Se încarcă...</div>
+<div *ngIf="error" class="error">{{ error }}</div>
+
+<div class="cards-container" *ngIf="!loading && categories.length">
+  <div class="card" *ngFor="let c of categories">
+    <h3>{{ c.name }}</h3>
+    <p *ngIf="c.parent">Părinte: {{ c.parent.name }}</p>
+    <p *ngIf="!c.parent">Categorie de top</p>
+  </div>
+</div>
+
+<p *ngIf="!loading && !categories.length">
+  Nu există categorii în acest moment.
+</p>

@@ -3,11 +3,12 @@ import {CommonModule, CurrencyPipe, NgFor} from '@angular/common';
 import {Product} from '../../../core/models/product.model';
 import {ProductService} from '../../../core/services/product.service';
 import {CartService} from '../../../core/services/cart.service';
+import {RouterLink} from '@angular/router';
 
 @Component({
   selector: 'app-products-list',
   standalone: true,
-  imports: [CommonModule, NgFor, CurrencyPipe],
+  imports: [CommonModule, NgFor, CurrencyPipe, RouterLink],
   templateUrl: './products-list.component.html',
   styleUrl: './products-list.component.css',
 })

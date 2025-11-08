@@ -6,6 +6,7 @@
 <ul *ngIf="!loading && !error">
   <li *ngFor="let p of products">
     <strong>{{ p.name }}</strong> — {{ p.price | currency:'RON':'symbol':'1.0-0' }}
+    <a [routerLink]="['/products', p.id]" style="margin-left:8px">Detalii</a>
     <button (click)="add(p)">Adaugă în coș</button>
   </li>
 </ul>

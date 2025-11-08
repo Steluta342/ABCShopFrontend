@@ -1,24 +1,39 @@
+<!-- features/checkout/checkout-page/checkout-page.component.html -->
 <h2>Checkout</h2>
 
-<label>
-  ID adresa livrare:
-  <input type="number" [(ngModel)]="deliveryAddressId" />
-</label>
+<div style="margin-bottom: 1rem;">
+  <label>
+    ID adresa livrare:
+    <input type="number" [(ngModel)]="deliveryAddressId">
+  </label>
 
-<label style="margin-left: 15px;">
-  ID adresa utilizator:
-  <input type="number" [(ngModel)]="userAddressId" />
-</label>
+  <label style="margin-left: 1rem;">
+    ID adresa utilizator:
+    <input type="number" [(ngModel)]="userAddressId">
+  </label>
 
-<button (click)="placeOrder()" [disabled]="!deliveryAddressId || !cart.lines.length">
-  Trimite comanda
-</button>
+  <button (click)="placeOrder()">Trimite comanda</button>
+</div>
 
 <h3>Rezumat coș:</h3>
-<ul>
+
+<ul *ngIf="cart.lines.length; else emptyCart">
   <li *ngFor="let l of cart.lines">
-    {{ l.product.name }} — x{{ l.quantity }} ({{ l.product.price }} RON)
+    <strong>{{ l.product.name }}</strong>
+    — x{{ l.quantity }}
+    ({{ l.product.price | currency:'RON':'symbol-narrow':'1.0-0' }} buc.)
+
+    <button (click)="dec(l)">-</button>
+    <button (click)="inc(l)">+</button>
+    <button (click)="remove(l)">Șterge</button>
   </li>
 </ul>
 
-<h3>Total: {{ cart.total }} RON</h3>
+<ng-template #emptyCart>
+  <p>Coșul este gol.</p>
+</ng-template>
+
+<p>
+  <strong>Total:</strong>
+  {{ cart.total | currency:'RON':'symbol-narrow':'1.0-0' }}
+</p>

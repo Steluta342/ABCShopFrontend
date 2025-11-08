@@ -1,0 +1,12 @@
+<div *ngIf="loading">Se încarcă...</div>
+<div *ngIf="error" class="error">{{ error }}</div>
+
+<!-- dacă există product, îl legăm la variabila p -->
+<div *ngIf="!loading && product as p">
+  <h2>{{ p.name }}</h2>
+  <p>Preț: {{ p.price }} RON</p>
+  <p *ngIf="p.description">Descriere: {{ p.description }}</p>
+  <!-- adaptează după modelul meu de Product -->
+
+  <button (click)="backToList()">Înapoi la produse</button>
+</div>

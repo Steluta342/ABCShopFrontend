@@ -1,15 +1,15 @@
-<h1>Produse</h1>
 
-<div *ngIf="loading">Se încarcă…</div>
-<div *ngIf="error" style="color:crimson">{{ error }}</div>
-
-<ul *ngIf="!loading && !error">
-  <li *ngFor="let p of products">{{ p.name }} — {{ p.price }} RON</li>
-</ul>
-<nav>
-  <a routerLink="/products">Produse</a> |
+<nav class="navbar">
+  <a routerLink="/products" routerLinkActive="active-link">Produse</a>
+  <a routerLink="/categories" routerLinkActive="active-link">Categorii</a>
+  <a routerLink="/checkout" routerLinkActive="active-link">Checkout</a>
   <a routerLink="/checkout">Coș ({{ (cart.lines$ | async)?.length ?? 0 }})</a>
 </nav>
 
-<router-outlet></router-outlet>
+<div class="main-container">
+  <router-outlet></router-outlet>
+</div>
+<!-- Acum toate paginile (products, categories, checkout) vor fi afișate în același layout,
+ cu meniu sus.-->
+
 
