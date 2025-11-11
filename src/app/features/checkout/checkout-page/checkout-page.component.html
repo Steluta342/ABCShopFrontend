@@ -1,15 +1,73 @@
-<!-- features/checkout/checkout-page/checkout-page.component.html -->
 <h2>Checkout</h2>
 
 <div class="checkout-form">
-  ID adresa livrare:
-  <input type="number" [(ngModel)]="deliveryAddressId">
 
-  ID adresa utilizator:
-  <input type="number" [(ngModel)]="userAddressId">
+  <label>
+    Adresă livrare:
+    <select [(ngModel)]="deliveryAddressId">
+      <option [ngValue]="undefined" disabled selected>— alege adresă —</option>
+      <option *ngFor="let a of addresses" [ngValue]="a.id">
+        {{ a.name }} — {{ a.city }}, {{ a.street }} ({{ a.zipCode }})
+      </option>
+    </select>
+  </label>
+
+  <label>
+    Adresă utilizator (facturare):
+    <select [(ngModel)]="userAddressId">
+      <option [ngValue]="undefined">— aceeași ca livrare —</option>
+      <option *ngFor="let a of addresses" [ngValue]="a.id">
+        {{ a.city }}, {{ a.street }} ({{ a.zipCode }})
+      </option>
+    </select>
+  </label>
 
   <button (click)="placeOrder()">Trimite comanda</button>
+
+  <!-- deschide formular adresă nouă -->
+  <button type="button" class="secondary" (click)="toggleNewAddressForm()">
+    Adaugă adresă nouă
+  </button>
 </div>
+
+<!-- Formular adresă nouă -->
+<div class="new-address" *ngIf="showNewAddressForm">
+  <h3>Adresă nouă</h3>
+
+  <div class="new-address-grid">
+
+    <label>
+      Nume adresă:
+      <input type="text" [(ngModel)]="newAddress.name" name="newName" placeholder="Ex: Acasă, Birou">
+    </label>
+
+    <label>
+      Țară:
+      <input type="text" [(ngModel)]="newAddress.country" name="newCountry">
+    </label>
+
+    <label>
+      Oraș:
+      <input type="text" [(ngModel)]="newAddress.city" name="newCity">
+    </label>
+
+    <label>
+      Stradă:
+      <input type="text" [(ngModel)]="newAddress.street" name="newStreet">
+    </label>
+
+    <label>
+      Cod poștal:
+      <input type="text" [(ngModel)]="newAddress.zipCode" name="newZip">
+    </label>
+  </div>
+
+  <div class="new-address-actions">
+    <button type="button" (click)="saveNewAddress()">Salvează adresa</button>
+    <button type="button" (click)="toggleNewAddressForm()">Renunță</button>
+  </div>
+</div>
+
 
 <div class="checkout-summary">
   <div class="checkout-summary">
@@ -55,5 +113,3 @@
       {{ cart.total | number:'1.0-0' }} lei
     </p>
   </div>
-
-

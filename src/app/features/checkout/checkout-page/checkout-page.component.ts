@@ -1,28 +1,100 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+import { AddressService } from '../../../core/services/address.service';
+import { Address } from '../../../core/models/address.model';
 import { Router } from '@angular/router';
 import { CartService, CartLine } from '../../../core/services/cart.service';
 import { OrderService } from '../../../core/services/order.service';
-import { OrderRequestPayload, OrderLinePayload } from '../../../core/models/order-payload.model';
-import {CommonModule, CurrencyPipe, NgFor, NgIf} from '@angular/common';
-import {FormsModule} from '@angular/forms';
+import { OrderRequestPayload } from '../../../core/models/order-payload.model';
+import { CommonModule, CurrencyPipe, NgFor, NgIf } from '@angular/common';
+import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-checkout-page',
   standalone: true,
-  imports: [CommonModule, FormsModule, NgIf, NgFor,CurrencyPipe],
+  imports: [CommonModule, FormsModule, NgIf, NgFor, CurrencyPipe],
   templateUrl: './checkout-page.component.html',
   styleUrls: ['./checkout-page.component.css']
 })
-export class CheckoutPageComponent {
-  userId = 1;//temporar pana fac partea de autentificare
+export class CheckoutPageComponent implements OnInit {
+  userId = 1; // temporar
   deliveryAddressId?: number;
   userAddressId?: number;
+
+  addresses: Address[] = [];
+
+  // form pentru adresă nouă
+  showNewAddressForm = false;
+  newAddress: Address = {
+    name: '',
+    country: '',
+    city: '',
+    street: '',
+    zipCode: ''
+  };
 
   constructor(
     public cart: CartService,
     private orders: OrderService,
-    private router: Router
+    private router: Router,
+    private addressService: AddressService
   ) {}
+
+  ngOnInit(): void {
+    this.addressService.getByUserId(this.userId).subscribe({
+      next: (data) => {
+        console.log('Adrese pentru user', this.userId, data);
+        this.addresses = data;
+      },
+      error: (err) => {
+        console.error('Eroare la preluarea adreselor:', err);
+      }
+    });
+  }
+
+  // 🔹 deschide/închide formularul
+  toggleNewAddressForm(): void {
+    this.showNewAddressForm = !this.showNewAddressForm;
+  }
+
+  // 🔹 salvează o adresă nouă prin backend
+  saveNewAddress(): void {
+    if (!this.newAddress.name?.trim()
+      || !this.newAddress.country
+      || !this.newAddress.city
+      || !this.newAddress.street
+      || !this.newAddress.zipCode) {
+      alert('Completează toate câmpurile adresei (inclusiv numele).');
+      return;
+    }
+
+    const payload: Address = {
+      ...this.newAddress,
+      name: this.newAddress.name.trim()
+    };
+
+    this.addressService.create(this.newAddress).subscribe({
+      next: (created) => {
+        // adăugăm noua adresă în listă
+        this.addresses.push(created);
+        // o setăm automat ca adresă de livrare
+        this.deliveryAddressId = created.id;
+
+        // resetăm formularul
+        this.newAddress = {
+          name: '',
+          country: '',
+          city: '',
+          street: '',
+          zipCode: ''
+        };
+        this.showNewAddressForm = false;
+      },
+      error: (err) => {
+        console.error('Eroare creare adresă:', err);
+        alert(err?.error?.message || 'Nu am putut salva adresa.');
+      }
+    });
+  }
 
   // helpers coș
   inc(line: CartLine) {
