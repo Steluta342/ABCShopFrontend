@@ -1,4 +1,4 @@
-
+<!--
 <nav class="navbar">
   <a routerLink="/products" routerLinkActive="active-link">Produse</a>
   <a routerLink="/categories" routerLinkActive="active-link">Categorii</a>
@@ -8,8 +8,24 @@
 
 <div class="main-container">
   <router-outlet></router-outlet>
-</div>
+</div>-->
 <!-- Acum toate paginile (products, categories, checkout) vor fi afișate în același layout,
  cu meniu sus.-->
+
+<nav class="navbar">
+  <a routerLink="/products" routerLinkActive="active-link">Produse</a>
+  <a routerLink="/categories" routerLinkActive="active-link">Categorii</a>
+  <a routerLink="/checkout" routerLinkActive="active-link">Checkout</a>
+
+  <!-- modificat: duce la /cart și folosește cartCount -->
+  <a routerLink="/cart" routerLinkActive="active-link">
+    Coș ({{ cartCount }})
+  </a>
+</nav>
+
+<div class="main-container">
+  <router-outlet></router-outlet>
+</div>
+
 
 

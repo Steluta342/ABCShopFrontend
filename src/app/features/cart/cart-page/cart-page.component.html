@@ -1,1 +1,59 @@
-<p>cart-page works!</p>
+<h1>Coș de cumpărături</h1>
+
+<div *ngIf="(lines$ | async) as lines; else emptyCart">
+
+  <table class="cart-table">
+    <thead>
+    <tr>
+      <th>Produs</th>
+      <th>Preț unitar</th>
+      <th>Cantitate</th>
+      <th>Total linie</th>
+      <th></th>
+    </tr>
+    </thead>
+
+    <tbody>
+    <tr *ngFor="let line of lines">
+      <td>
+        <strong>{{ line.product.name }}</strong>
+      </td>
+
+      <td>
+      {{ line.product.price | number:'1.2-2' }} lei
+      </td>
+
+      <td class="qty-cell">
+        <button type="button" (click)="changeQty(line, -1)">−</button>
+        <span>{{ line.quantity }}</span>
+        <button type="button" (click)="changeQty(line, 1)">+</button>
+      </td>
+
+      <td>
+        {{ (line.product.price * line.quantity) | number:'1.2-2' }} lei
+      </td>
+
+      <td>
+        <button type="button" (click)="remove(line)">Șterge</button>
+      </td>
+    </tr>
+    </tbody>
+  </table>
+
+  <div class="cart-summary">
+    <p>
+      <strong>Total de plată:</strong>
+      {{ total | number:'1.2-2' }} lei
+    </p>
+
+    <div class="cart-actions">
+      <button type="button" (click)="clear()">Golește coșul</button>
+      <a routerLink="/checkout">Continuă la checkout</a>
+    </div>
+  </div>
+</div>
+
+<ng-template #emptyCart>
+  <p>Coșul tău este gol.</p>
+  <a routerLink="/products">Înapoi la produse</a>
+</ng-template>

@@ -12,26 +12,48 @@
 </div>
 
 <div class="checkout-summary">
-  <h3>Rezumat coș:</h3>
-  <ul *ngIf="cart.lines.length; else emptyCart">
-    <li *ngFor="let item of cart.lines">
-      <strong>{{ item.product.name }}</strong>
-      — x{{ item.quantity }} (lei{{ item.product.price }} buc.)
+  <div class="checkout-summary">
+    <h3>Rezumat coș:</h3>
 
-      <button (click)="dec(item)">-</button>
-      <button (click)="inc(item)">+</button>
-      <button (click)="remove(item)">Șterge</button>
-    </li>
-  </ul>
+    <div *ngIf="cart.lines.length; else emptyCart" class="checkout-lines">
 
-  <ng-template #emptyCart>
-    <p>Coșul este gol.</p>
-  </ng-template>
+      <div class="checkout-line" *ngFor="let item of cart.lines">
 
-  <p>
-    <strong>Total:</strong>
-    {{ cart.total | currency:'RON':'symbol-narrow':'1.0-0' }}
-  </p>
-</div>
+        <!-- stânga: nume + detalii -->
+        <div class="line-info">
+          <span class="product-name">{{ item.product.name }}</span>
+          <span class="product-details">
+          — x {{ item.quantity }} buc.
+          ( {{ item.product.price || 0 | number:'1.2-2' }} lei / buc.)
+        </span>
+        </div>
+
+        <!-- dreapta: butoane - + Șterge pe un singur rând -->
+        <div class="line-actions">
+          <button type="button" (click)="dec(item)">−</button>
+          <span class="qty">{{ item.quantity }}</span>
+          <button type="button" (click)="inc(item)">+</button>
+
+          <button
+            type="button"
+            class="delete-btn"
+            (click)="remove(item)">
+            Șterge
+          </button>
+        </div>
+
+      </div>
+
+    </div>
+
+    <ng-template #emptyCart>
+      <p>Coșul este gol.</p>
+    </ng-template>
+
+    <p class="checkout-total">
+      <strong>Total:</strong>
+      {{ cart.total | number:'1.0-0' }} lei
+    </p>
+  </div>
 
 

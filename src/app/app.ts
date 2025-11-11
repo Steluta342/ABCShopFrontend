@@ -2,14 +2,14 @@ import { Component, OnInit } from '@angular/core';
 import { ProductService } from './core/services/product.service';
 import { Product } from './core/models/product.model';
 import {AsyncPipe, CommonModule, NgFor, NgIf} from '@angular/common';
-import {RouterLink, RouterOutlet} from '@angular/router';
+import {RouterLink, RouterLinkActive, RouterOutlet} from '@angular/router';
 import {FormsModule} from '@angular/forms';
 import { CartService } from './core/services/cart.service';
 
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [CommonModule, NgIf, NgFor, FormsModule, RouterOutlet, RouterLink, AsyncPipe],
+  imports: [CommonModule, NgIf, NgFor, FormsModule, RouterOutlet, RouterLink, RouterLinkActive, AsyncPipe],
   templateUrl: './app.html'
 })
 export class App implements OnInit {
@@ -21,6 +21,11 @@ export class App implements OnInit {
     private productService: ProductService,
     public  cart: CartService
   ) {}
+
+  get cartCount(): number {
+    // numărul total de produse din coș (suma cantităților)
+    return this.cart.lines.reduce((sum, line) => sum + line.quantity, 0);
+  }
 
   ngOnInit(): void {
     this.loading = true;
