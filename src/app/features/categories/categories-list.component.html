@@ -1,45 +1,29 @@
-
-<!-- ce am initial
-<div *ngIf="loading">Se încarcă...</div>
-<div *ngIf="error" class="error">{{ error }}</div>
-
-<div class="cards-container" *ngIf="!loading && categories.length">
-  <div class="card" *ngFor="let c of categories">
-    <h3>{{ c.name }}</h3>
-    <p *ngIf="c.parent">Părinte: {{ c.parent.name }}</p>
-    <p *ngIf="!c.parent">Categorie de top</p>
-  </div>
-</div>
-
-<p *ngIf="!loading && !categories.length">
-  Nu există categorii în acest moment.
-</p>
--->
 <h2>Categorii</h2>
 
 <div *ngIf="loading">Se încarcă...</div>
 <div *ngIf="error" class="error">{{ error }}</div>
 
 <div *ngIf="!loading && !error" class="categories-menu">
-  <!-- Coloane cu categorii de top -->
-  <div
-    class="category-column"
-    *ngFor="let cat of rootCategories"
-  >
-    <h3>{{ cat.name }}</h3>
+  <div class="category-column" *ngFor="let cat of rootCategories">
+    <!-- titlul de top este clicabil -->
+    <h3>
+      <a class="cat-link" (click)="goToProducts(cat.id!)">{{ cat.name }}</a>
+    </h3>
 
     <ul>
       <li *ngFor="let child of getChildren(cat.id)">
-        {{ child.name }}
+        <a class="cat-link" (click)="goToProducts(child.id!)">
+          {{ child.name }}
+        </a>
       </li>
     </ul>
 
-    <!-- dacă nu are copii, afișăm un mic text -->
     <p *ngIf="getChildren(cat.id).length === 0" class="top-info">
       Categorie de top
     </p>
   </div>
 </div>
+
 <p *ngIf="!loading && !categories.length">
   Nu există categorii în acest moment.
 </p>

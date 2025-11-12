@@ -2,6 +2,17 @@ h1 {
   margin-bottom: 16px;
 }
 
+/* layout pagină: sidebar + content */
+.page {
+  display: grid;
+  grid-template-columns: 260px 1fr;
+  gap: 20px;
+  align-items: start;
+}
+.sidebar { position: sticky; top: 10px; height: fit-content; }
+.content { min-width: 0; } /* previne căderea listei sub sidebar */
+
+/* lista de produse (stilurile) */
 .product-list {
   list-style: none;
   padding: 0;
@@ -19,13 +30,8 @@ h1 {
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
 }
 
-.product-name {
-  font-weight: 600;
-}
-
-.product-price {
-  margin-left: 8px;
-}
+.product-name { font-weight: 600; }
+.product-price { margin-left: 8px; }
 
 .product-actions button,
 .product-actions .link-button {
@@ -46,4 +52,9 @@ h1 {
 .product-actions button:hover,
 .product-actions .link-button:hover {
   background: #e0e0e0;
+}
+
+@media (max-width: 900px) {
+  .page { grid-template-columns: 1fr; }
+  .sidebar { position: static; }
 }

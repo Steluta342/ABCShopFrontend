@@ -1,0 +1,12 @@
+.filter { background:#fff; border-radius:4px; padding:12px 14px; box-shadow:0 1px 3px rgba(0,0,0,.08); }
+.filter h3 { margin-top:0; margin-bottom:10px; }
+
+.tree, .tree ul { list-style:none; margin:0; padding:0; }
+.tree > li { margin-bottom:8px; }
+.tree a { text-decoration:none; cursor:pointer; }
+.tree a:hover { text-decoration:underline; }
+.tree ul { margin-left:14px; margin-top:6px; }
+
+.active { font-weight:600; text-decoration:underline; }
+.clear { margin-top:10px; }
+.error { color:crimson; }

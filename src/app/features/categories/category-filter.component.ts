@@ -1,37 +1,27 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { RouterLink, RouterLinkActive } from '@angular/router';
 import { Category } from '../../core/models/category.model';
 import { CategoryService } from '../../core/services/category.service';
-import { Router } from '@angular/router';
 
 @Component({
-  selector: 'app-categories-list',
+  selector: 'app-category-filter',
   standalone: true,
-  imports: [CommonModule],
-  templateUrl: './categories-list.component.html',
-  styleUrls: ['./categories-list.component.css']
+  imports: [CommonModule, RouterLink, RouterLinkActive],
+  templateUrl: './category-filter.component.html',
+  styleUrls: ['./category-filter.component.css'],
 })
-export class CategoriesListComponent implements OnInit {
+export class CategoryFilterComponent implements OnInit {
   categories: Category[] = [];
   rootCategories: Category[] = [];
   childrenMap = new Map<number, Category[]>();
-
   loading = false;
   error?: string;
 
-  constructor(
-    private categoryService: CategoryService,
-    private router: Router
-  ) {}
+  constructor(private categoryService: CategoryService) {}
 
   ngOnInit(): void {
-    this.loadCategories();
-  }
-
-  loadCategories(): void {
     this.loading = true;
-    this.error = undefined;
-
     this.categoryService.getAll().subscribe({
       next: (data) => {
         this.categories = data;
@@ -49,10 +39,10 @@ export class CategoriesListComponent implements OnInit {
     this.rootCategories = this.categories.filter(c => !c.parent);
     this.childrenMap.clear();
     this.categories.forEach(c => {
-      if (c.parent?.id != null) {
-        const parentId = c.parent.id;
-        if (!this.childrenMap.has(parentId)) this.childrenMap.set(parentId, []);
-        this.childrenMap.get(parentId)!.push(c);
+      const pid = c.parent?.id;
+      if (pid != null) {
+        if (!this.childrenMap.has(pid)) this.childrenMap.set(pid, []);
+        this.childrenMap.get(pid)!.push(c);
       }
     });
   }
@@ -60,10 +50,5 @@ export class CategoriesListComponent implements OnInit {
   getChildren(parentId?: number): Category[] {
     if (parentId == null) return [];
     return this.childrenMap.get(parentId) || [];
-  }
-
-  //  navigare la products cu query param
-  goToProducts(categoryId: number): void {
-    this.router.navigate(['/products'], { queryParams: { categoryId } });
   }
 }

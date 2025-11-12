@@ -41,3 +41,5 @@ h2 {
   font-size: 0.8rem;
   color: #777;
 }
+.cat-link { cursor: pointer; text-decoration: none; }
+.cat-link:hover { text-decoration: underline; }

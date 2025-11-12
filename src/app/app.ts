@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ProductService } from './core/services/product.service';
 import { Product } from './core/models/product.model';
-import {AsyncPipe, CommonModule, NgFor, NgIf} from '@angular/common';
+import { CommonModule } from '@angular/common';
 import {RouterLink, RouterLinkActive, RouterOutlet} from '@angular/router';
 import {FormsModule} from '@angular/forms';
 import { CartService } from './core/services/cart.service';
@@ -9,7 +9,7 @@ import { CartService } from './core/services/cart.service';
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [CommonModule, NgIf, NgFor, FormsModule, RouterOutlet, RouterLink, RouterLinkActive, AsyncPipe],
+  imports: [CommonModule, FormsModule, RouterOutlet, RouterLink, RouterLinkActive],
   templateUrl: './app.html'
 })
 export class App implements OnInit {
