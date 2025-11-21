@@ -5,5 +5,5 @@ export interface Address {
   city: string;
   street: string;
   zipCode: string;
-  // userId?: number; // preferabil id, nu tot obiectul
+  userId?: number; // preferabil id, nu tot obiectul
 }

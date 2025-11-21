@@ -16,7 +16,7 @@ import { FormsModule } from '@angular/forms';
   styleUrls: ['./checkout-page.component.css']
 })
 export class CheckoutPageComponent implements OnInit {
-  userId = 1; // temporar
+  userId!: number;
   deliveryAddressId?: number;
   userAddressId?: number;
 
@@ -56,37 +56,37 @@ export class CheckoutPageComponent implements OnInit {
     this.showNewAddressForm = !this.showNewAddressForm;
   }
 
-  // 🔹 salvează o adresă nouă prin backend
   saveNewAddress(): void {
     if (!this.newAddress.name?.trim()
       || !this.newAddress.country
       || !this.newAddress.city
       || !this.newAddress.street
-      || !this.newAddress.zipCode) {
+      || !this.newAddress.zipCode
+      || !this.newAddress.userId) {
       alert('Completează toate câmpurile adresei (inclusiv numele).');
       return;
     }
 
     const payload: Address = {
       ...this.newAddress,
-      name: this.newAddress.name.trim()
+      name: this.newAddress.name.trim(),
+      userId: this.newAddress.userId
     };
 
-    this.addressService.create(this.newAddress).subscribe({
+    this.addressService.create(payload).subscribe({
       next: (created) => {
-        // adăugăm noua adresă în listă
         this.addresses.push(created);
-        // o setăm automat ca adresă de livrare
         this.deliveryAddressId = created.id;
 
-        // resetăm formularul
         this.newAddress = {
           name: '',
           country: '',
           city: '',
           street: '',
-          zipCode: ''
+          zipCode: '',
+          userId: payload.userId   // 👈 păstrăm userId!
         };
+
         this.showNewAddressForm = false;
       },
       error: (err) => {
