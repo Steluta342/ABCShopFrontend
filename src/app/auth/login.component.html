@@ -1,0 +1,14 @@
+<h2>Autentificare</h2>
+
+<form (ngSubmit)="submit()">
+
+  <label>Username:</label>
+  <input type="username" [(ngModel)]="username" name="username" required>
+
+  <label>Parola:</label>
+  <input type="password" [(ngModel)]="password" name="password" required>
+
+  <button type="submit">Loghează-te</button>
+
+  <p *ngIf="errorMessage" style="color:red">{{ errorMessage }}</p>
+</form>
