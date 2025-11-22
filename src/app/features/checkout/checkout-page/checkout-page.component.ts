@@ -4,9 +4,12 @@ import { Address } from '../../../core/models/address.model';
 import { Router } from '@angular/router';
 import { CartService, CartLine } from '../../../core/services/cart.service';
 import { OrderService } from '../../../core/services/order.service';
-import { OrderRequestPayload, nowLocalIso } from '../../../core/models/order-payload.model';
+import {nowLocalIso, OrderRequestPayload} from '../../../core/models/order-payload.model';
 import { CommonModule, NgFor, NgIf } from '@angular/common';
 import { FormsModule } from '@angular/forms';
+import {AuthService} from '../../../auth/auth.service';
+
+
 
 @Component({
   selector: 'app-checkout-page',
@@ -19,35 +22,46 @@ export class CheckoutPageComponent implements OnInit {
   userId!: number;
   deliveryAddressId?: number;
   userAddressId?: number;
-
   addresses: Address[] = [];
+  cartItems: { productId: number; quantity: number }[] = [];
+  status: String = 'NEW';
 
-  // form pentru adresă nouă
+  // formular pentru adresă nouă
   showNewAddressForm = false;
+
   newAddress: Address = {
     name: '',
     country: '',
     city: '',
     street: '',
-    zipCode: ''
+    zipCode: '',
+    userId: 0              // 👉 userId va fi setat în ngOnInit()
   };
 
   constructor(
     public cart: CartService,
     private orders: OrderService,
     private router: Router,
-    private addressService: AddressService
+    private addressService: AddressService,
+    private authService: AuthService
   ) {}
 
   ngOnInit(): void {
-    this.addressService.getByUserId(this.userId).subscribe({
-      next: (data) => {
-        console.log('Adrese pentru user', this.userId, data);
-        this.addresses = data;
-      },
-      error: (err) => {
-        console.error('Eroare la preluarea adreselor:', err);
-      }
+    const id = this.authService.getUserId();
+
+    if (!id) {
+      console.error('Niciun utilizator logat!');
+      return;
+    }
+    this.userId = id;
+    this.newAddress.userId = id;
+    this.loadAddresses(id);
+  }
+
+  loadAddresses(userId: number) {
+    this.addressService.getByUserId(userId).subscribe({
+      next: (data) => this.addresses = data,
+      error: (err) => console.error('Eroare la adrese:', err)
     });
   }
 
@@ -57,20 +71,21 @@ export class CheckoutPageComponent implements OnInit {
   }
 
   saveNewAddress(): void {
-    if (!this.newAddress.name?.trim()
-      || !this.newAddress.country
-      || !this.newAddress.city
-      || !this.newAddress.street
-      || !this.newAddress.zipCode
-      || !this.newAddress.userId) {
-      alert('Completează toate câmpurile adresei (inclusiv numele).');
+    if (
+      !this.newAddress.name?.trim() ||
+      !this.newAddress.country ||
+      !this.newAddress.city ||
+      !this.newAddress.street ||
+      !this.newAddress.zipCode
+    ) {
+      alert('Completează toate câmpurile adresei.');
       return;
     }
 
     const payload: Address = {
       ...this.newAddress,
       name: this.newAddress.name.trim(),
-      userId: this.newAddress.userId
+      userId: this.userId
     };
 
     this.addressService.create(payload).subscribe({
@@ -139,6 +154,7 @@ export class CheckoutPageComponent implements OnInit {
         product: { id: l.product.id! }
       }))
     };
+
 
     console.log('OrderRequest trimis:', body);
 
