@@ -1,0 +1,47 @@
+<div class="login-container">
+  <h2>Autentificare</h2>
+
+  <form (ngSubmit)="submit()">
+    <div class="form-row">
+      <label for="username">Utilizator</label>
+      <input
+        id="username"
+        type="text"
+        name="username"
+        [(ngModel)]="model.username"
+        autocomplete="username"
+      />
+    </div>
+
+    <div class="form-row">
+      <label for="password">Parolă</label>
+      <input
+        id="password"
+        type="password"
+        name="password"
+        [(ngModel)]="model.password"
+        autocomplete="current-password"
+      />
+    </div>
+
+    <button type="submit" [disabled]="loading">
+      {{ loading ? 'Se autentifică...' : 'Login' }}
+    </button>
+
+    <!-- aici era linia neterminată -->
+    <p class="error" *ngIf="error">
+      {{ error }}
+    </p>
+
+    <!-- opțional, link spre o viitoare pagină de înregistrare -->
+    <!--
+    <p class="hint">
+      Nu ai cont? <a routerLink="/register">Înregistrează-te</a>
+    </p>
+    -->
+  </form>
+  <!-- 👇 Linkul care folosește RouterLink -->
+  <p class="back-link">
+    <a routerLink="/products">⟵ Înapoi la produse</a>
+  </p>
+</div>

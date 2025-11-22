@@ -1,10 +1,11 @@
 import { Component, OnInit } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { FormsModule } from '@angular/forms';
+import { RouterLink, RouterLinkActive, RouterOutlet } from '@angular/router';
 import { ProductService } from './core/services/product.service';
 import { Product } from './core/models/product.model';
-import { CommonModule } from '@angular/common';
-import {RouterLink, RouterLinkActive, RouterOutlet} from '@angular/router';
-import {FormsModule} from '@angular/forms';
 import { CartService } from './core/services/cart.service';
+import { AuthService } from './core/services/auth.service';
 
 @Component({
   selector: 'app-root',
@@ -19,11 +20,11 @@ export class App implements OnInit {
 
   constructor(
     private productService: ProductService,
-    public  cart: CartService
+    public cart: CartService,
+    public auth: AuthService          // îl facem public, îl folosim în template
   ) {}
 
   get cartCount(): number {
-    // numărul total de produse din coș (suma cantităților)
     return this.cart.lines.reduce((sum, line) => sum + line.quantity, 0);
   }
 
@@ -41,7 +42,8 @@ export class App implements OnInit {
       complete: () => (this.loading = false)
     });
   }
+
+  onLogout(): void {
+    this.auth.logout();
+  }
 }
-
-
-//test

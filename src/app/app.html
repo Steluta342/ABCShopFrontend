@@ -1,32 +1,30 @@
-<!--
 <nav class="navbar">
   <a routerLink="/products" routerLinkActive="active-link">Produse</a>
   <a routerLink="/categories" routerLinkActive="active-link">Categorii</a>
   <a routerLink="/checkout" routerLinkActive="active-link">Checkout</a>
-  <a routerLink="/checkout">Coș ({{ (cart.lines$ | async)?.length ?? 0 }})</a>
-</nav>
+  <a routerLink="/my-orders" routerLinkActive="active-link">Comenzile mele</a>
 
-<div class="main-container">
-  <router-outlet></router-outlet>
-</div>-->
-<!-- Acum toate paginile (products, categories, checkout) vor fi afișate în același layout,
- cu meniu sus.-->
-
-<nav class="navbar">
-  <a routerLink="/products" routerLinkActive="active-link">Produse</a>
-  <a routerLink="/categories" routerLinkActive="active-link">Categorii</a>
-  <a routerLink="/checkout" routerLinkActive="active-link">Checkout</a>
-  <a routerLink="/my-orders" routerLinkActive="active">Comenzile mele</a>
-
-  <!-- modificat: duce la /cart și folosește cartCount -->
   <a routerLink="/cart" routerLinkActive="active-link">
     Coș ({{ cartCount }})
   </a>
+
+  <!-- spațiu între link-uri și zona de user -->
+  <span style="flex: 1 1 auto;"></span>
+
+  <!-- 👇 dacă nu e logat, afișează Login -->
+  <a *ngIf="!auth.isLoggedIn"
+     routerLink="/login"
+     routerLinkActive="active-link">
+    Login
+  </a>
+
+  <!-- 👇 dacă e logat, afișează numele + Logout -->
+  <span *ngIf="auth.isLoggedIn" class="user-info">
+    Salut, {{ auth.currentUser?.firstName }} {{ auth.currentUser?.lastName }}!
+    <button (click)="onLogout()">Logout</button>
+  </span>
 </nav>
 
 <div class="main-container">
   <router-outlet></router-outlet>
 </div>
-
-
-
