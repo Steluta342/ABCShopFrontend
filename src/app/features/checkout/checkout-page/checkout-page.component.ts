@@ -4,7 +4,7 @@ import { Address } from '../../../core/models/address.model';
 import { Router } from '@angular/router';
 import { CartService, CartLine } from '../../../core/services/cart.service';
 import { OrderService } from '../../../core/services/order.service';
-import { OrderRequestPayload } from '../../../core/models/order-payload.model';
+import { OrderRequestPayload, nowLocalIso } from '../../../core/models/order-payload.model';
 import { CommonModule, CurrencyPipe, NgFor, NgIf } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 
@@ -116,9 +116,7 @@ export class CheckoutPageComponent implements OnInit {
     this.cart.remove(id);
   }
 
-  private nowLocalIso(): string {
-    return new Date().toISOString().slice(0, 19);
-  }
+
 
   placeOrder() {
     if (!this.deliveryAddressId) {
@@ -134,7 +132,7 @@ export class CheckoutPageComponent implements OnInit {
       user: { id: this.userId },
       deliveryAddress: { id: this.deliveryAddressId },
       userAddress: this.userAddressId ? { id: this.userAddressId } : undefined,
-      orderDate: this.nowLocalIso(),
+      orderDate: nowLocalIso(),
       status: 'NEW',
       orderLines: this.cart.lines.map(l => ({
         quantity: l.quantity,
@@ -146,7 +144,7 @@ export class CheckoutPageComponent implements OnInit {
 
     this.orders.create(body).subscribe({
       next: (resp) => {
-        alert('Comanda a fost înregistrată! \'Comanda trimisă! (simulat)\'');
+        alert('Comanda a fost înregistrată cu succes!');
         console.log('Răspuns backend:', resp);
         this.cart.clear();
         this.router.navigateByUrl('/products');
