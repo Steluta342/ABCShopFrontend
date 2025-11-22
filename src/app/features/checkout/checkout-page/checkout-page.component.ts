@@ -7,7 +7,7 @@ import { OrderService } from '../../../core/services/order.service';
 import {nowLocalIso, OrderRequestPayload} from '../../../core/models/order-payload.model';
 import { CommonModule, NgFor, NgIf } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import {AuthService} from '../../../auth/auth.service';
+import { AuthService } from '../../../core/services/auth.service';
 
 
 
@@ -35,7 +35,7 @@ export class CheckoutPageComponent implements OnInit {
     city: '',
     street: '',
     zipCode: '',
-    userId: 0              // 👉 userId va fi setat în ngOnInit()
+    userId: 0              //  userId va fi setat în ngOnInit()
   };
 
   constructor(

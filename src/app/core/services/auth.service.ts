@@ -43,6 +43,10 @@ export class AuthService {
     return this.currentUserSubject.value;
   }
 
+  getUserId(): number | null {
+    return this.currentUser?.id ?? null;
+  }
+
   get isLoggedIn(): boolean {
     return !!this.currentUserSubject.value;
   }

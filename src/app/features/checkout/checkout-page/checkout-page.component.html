@@ -38,7 +38,10 @@
 
     <label>
       Nume adresă:
-      <input type="text" [(ngModel)]="newAddress.name" name="newName" placeholder="Ex: Acasă, Birou">
+      <input type="text"
+             [(ngModel)]="newAddress.name"
+             name="newName"
+             placeholder="Ex: Acasă, Birou">
     </label>
 
     <label>
@@ -61,60 +64,54 @@
       <input type="text" [(ngModel)]="newAddress.zipCode" name="newZip">
     </label>
 
-    <label>
-      User ID:
-      <input type="number" [(ngModel)]="newAddress.userId" name="userID" required />
-    </label>
-  </div>
+  </div> <!-- end .new-address-grid -->
 
   <div class="new-address-actions">
     <button type="button" (click)="saveNewAddress()">Salvează adresa</button>
     <button type="button" (click)="toggleNewAddressForm()">Renunță</button>
   </div>
-</div>
-
+</div> <!-- end .new-address -->
 
 <div class="checkout-summary">
-  <div class="checkout-summary">
-    <h3>Rezumat coș:</h3>
+  <h3>Rezumat coș:</h3>
 
-    <div *ngIf="cart.lines.length; else emptyCart" class="checkout-lines">
+  <div *ngIf="cart.lines.length; else emptyCart" class="checkout-lines">
 
-      <div class="checkout-line" *ngFor="let item of cart.lines">
+    <div class="checkout-line" *ngFor="let item of cart.lines">
 
-        <!-- stânga: nume + detalii -->
-        <div class="line-info">
-          <span class="product-name">{{ item.product.name }}</span>
-          <span class="product-details">
+      <!-- stânga: nume + detalii -->
+      <div class="line-info">
+        <span class="product-name">{{ item.product.name }}</span>
+        <span class="product-details">
           — x {{ item.quantity }} buc.
           ( {{ item.product.price || 0 | number:'1.2-2' }} lei / buc.)
         </span>
-        </div>
+      </div>
 
-        <!-- dreapta: butoane - + Șterge pe un singur rând -->
-        <div class="line-actions">
-          <button type="button" (click)="dec(item)">−</button>
-          <span class="qty">{{ item.quantity }}</span>
-          <button type="button" (click)="inc(item)">+</button>
+      <!-- dreapta: butoane - + Șterge pe un singur rând -->
+      <div class="line-actions">
+        <button type="button" (click)="dec(item)">−</button>
+        <span class="qty">{{ item.quantity }}</span>
+        <button type="button" (click)="inc(item)">+</button>
 
-          <button
-            type="button"
-            class="delete-btn"
-            (click)="remove(item)">
-            Șterge
-          </button>
-        </div>
-
+        <button
+          type="button"
+          class="delete-btn"
+          (click)="remove(item)">
+          Șterge
+        </button>
       </div>
 
     </div>
 
-    <ng-template #emptyCart>
-      <p>Coșul este gol.</p>
-    </ng-template>
-
-    <p class="checkout-total">
-      <strong>Total:</strong>
-      {{ cart.total | number:'1.0-0' }} lei
-    </p>
   </div>
+
+  <ng-template #emptyCart>
+    <p>Coșul este gol.</p>
+  </ng-template>
+
+  <p class="checkout-total">
+    <strong>Total:</strong>
+    {{ cart.total | number:'1.0-0' }} lei
+  </p>
+</div>
