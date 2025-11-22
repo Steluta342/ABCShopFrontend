@@ -5,13 +5,13 @@ import { Router } from '@angular/router';
 import { CartService, CartLine } from '../../../core/services/cart.service';
 import { OrderService } from '../../../core/services/order.service';
 import { OrderRequestPayload, nowLocalIso } from '../../../core/models/order-payload.model';
-import { CommonModule, CurrencyPipe, NgFor, NgIf } from '@angular/common';
+import { CommonModule, NgFor, NgIf } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-checkout-page',
   standalone: true,
-  imports: [CommonModule, FormsModule, NgIf, NgFor, CurrencyPipe],
+  imports: [CommonModule, FormsModule, NgIf, NgFor],
   templateUrl: './checkout-page.component.html',
   styleUrls: ['./checkout-page.component.css']
 })
