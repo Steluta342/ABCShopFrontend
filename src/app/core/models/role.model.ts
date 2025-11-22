@@ -1,6 +1,5 @@
 
 export interface Role {
-  id?: number;
-  roleName: String ;
- // users: List;
+  id?: number;        // corespunde RoleResponse.id
+  roleName: string;   // corespunde RoleResponse.roleName
 }

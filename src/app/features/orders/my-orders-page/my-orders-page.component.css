@@ -1,0 +1,60 @@
+.my-orders {
+  max-width: 900px;
+  margin: 2rem auto;
+}
+
+.order-card {
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  padding: 1rem 1.5rem;
+  margin-bottom: 1.5rem;
+  background: #fff;
+}
+
+.order-header {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 0.5rem;
+  margin-bottom: 0.5rem;
+}
+
+.order-total {
+  font-weight: bold;
+}
+
+.order-addresses {
+  font-size: 0.9rem;
+  margin-bottom: 0.75rem;
+}
+
+.order-addresses div {
+  margin-bottom: 0.25rem;
+}
+
+.order-lines {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.9rem;
+}
+
+.order-lines th,
+.order-lines td {
+  border: 1px solid #eee;
+  padding: 0.4rem 0.6rem;
+}
+
+.order-lines th {
+  background: #f7f7f7;
+}
+
+.info {
+  margin-top: 1rem;
+  color: #555;
+}
+
+.error {
+  margin-top: 1rem;
+  color: #b00020;
+  font-weight: 600;
+}

@@ -1,0 +1,67 @@
+<div class="my-orders">
+  <h2>Comenzile mele</h2>
+
+  <div *ngIf="loading" class="info">
+    Se încarcă comenzile...
+  </div>
+
+  <div *ngIf="error" class="error">
+    {{ error }}
+  </div>
+
+  <div *ngIf="!loading && !error && !orders.length" class="info">
+    Nu aveți comenzi plasate încă.
+  </div>
+
+  <div *ngFor="let order of orders" class="order-card">
+    <div class="order-header">
+      <div>
+        <strong>Comanda #{{ order.id }}</strong>
+      </div>
+      <div>
+        Data: {{ order.orderDate | date: 'dd.MM.yyyy HH:mm' }}
+      </div>
+      <div *ngIf="order.status">
+        Status: {{ order.status }}
+      </div>
+      <div class="order-total">
+        Total: {{ getOrderTotal(order) | currency:'RON':'symbol':'1.2-2':'ro-RO' }}
+      </div>
+    </div>
+
+    <div class="order-addresses">
+      <div>
+        <strong>Adresă livrare:</strong>
+        {{ order.deliveryAddress?.city }},
+        {{ order.deliveryAddress?.street }},
+        {{ order.deliveryAddress?.zipCode }}
+      </div>
+
+      <div *ngIf="order.userAddress">
+        <strong>Adresă facturare:</strong>
+        {{ order.userAddress?.city }},
+        {{ order.userAddress?.street }},
+        {{ order.userAddress?.zipCode }}
+      </div>
+    </div>
+
+    <table class="order-lines">
+      <thead>
+      <tr>
+        <th>Produs</th>
+        <th>Preț unitar</th>
+        <th>Cantitate</th>
+        <th>Total linie</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr *ngFor="let line of order.orderLines">
+        <td>{{ line.product.name }}</td>
+        <td>{{ line.product.price | currency:'RON':'symbol':'1.2-2':'ro-RO' }}</td>
+        <td>{{ line.quantity }}</td>
+        <td>{{ getLineTotal(line) | currency:'RON':'symbol':'1.2-2':'ro-RO' }}</td>
+      </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

@@ -1,4 +1,3 @@
-
 export type Status = 'NEW' | 'PROCESSING' | 'PROCESSED' | 'DELIVERED';
 
 export interface IdOnly {
@@ -9,20 +8,27 @@ export interface OrderLinePayload {
   quantity: number;
   // !! numele câmpului trebuie să fie EXACT "product"
   product: IdOnly;
-  // "order" e ignorat de server (@JsonIgnore) -> nu îl trimitem
 }
 
 export interface OrderRequestPayload {
-  user: IdOnly;                 // UserResponse "slab" cu doar id
-  deliveryAddress: IdOnly;      // AddressResponse "slab" cu doar id
-  userAddress?: IdOnly;         // opțional dacă vreau să trimit și adresa userului
-  orderDate: string;            // ISO local (fără "Z"), pt LocalDateTime
+  user: IdOnly;
+  deliveryAddress: IdOnly;
+  userAddress?: IdOnly;
+  orderDate: string;            // ISO pt LocalDateTime
   orderLines: OrderLinePayload[];
-  status?: Status;              // ex: 'NEW'
+  status?: Status;
 }
+export function nowLocalIso(): string {
+  // dată și oră LOCALĂ "YYYY-MM-DDTHH:mm:ss"
+  const d = new Date();
+  const pad = (n: number) => n.toString().padStart(2, '0');
 
-function nowLocalIso(): string {
-  // "YYYY-MM-DDTHH:mm:ss" (fără zecimi, fără Z)
-  return new Date().toISOString().slice(0, 19);
+  const year   = d.getFullYear();
+  const month  = pad(d.getMonth() + 1);
+  const day    = pad(d.getDate());
+  const hour   = pad(d.getHours());
+  const minute = pad(d.getMinutes());
+  const second = pad(d.getSeconds());
+
+  return `${year}-${month}-${day}T${hour}:${minute}:${second}`;
 }
-
