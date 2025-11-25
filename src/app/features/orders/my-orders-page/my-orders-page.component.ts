@@ -43,8 +43,18 @@ export class MyOrdersPageComponent implements OnInit {
     });
   }
 
-  // calculează totalul unei comenzi
+  /**
+   * Totalul comenzii.
+   *
+   * 1. Dacă backend-ul a trimis order.totalPrice, o folosim direct.
+   * 2. Dacă nu (vechi sau fallback), calculăm aici din linii:
+   *     sum(price * quantity).
+   */
   getOrderTotal(order: Order): number {
+    if (order.totalPrice != null) {
+      return order.totalPrice;
+    }
+
     return order.orderLines?.reduce((sum, line) => {
       const price = line.product?.price ?? 0;
       return sum + price * line.quantity;

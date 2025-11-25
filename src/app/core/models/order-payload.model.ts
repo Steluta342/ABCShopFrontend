@@ -1,3 +1,5 @@
+// src/app/core/models/order-payload.model.ts
+
 export type Status = 'NEW' | 'PROCESSING' | 'PROCESSED' | 'DELIVERED';
 
 export interface IdOnly {
@@ -6,20 +8,22 @@ export interface IdOnly {
 
 export interface OrderLinePayload {
   quantity: number;
-  // !! numele câmpului trebuie să fie EXACT "product"
-  product: IdOnly;
+  // numele câmpului trebuie să fie EXACT "product"
+  product: { id: number };
 }
 
+// AICI trimitem doar datele necesare pentru crearea comenzii.
+// totalPrice NU se trimite, este calculat în backend.
 export interface OrderRequestPayload {
-  user: IdOnly;
-  deliveryAddress: IdOnly;
-  userAddress?: IdOnly;
+  userId: number;
+  deliveryAddressId: number;
+  userAddressId?: number | null;
   orderDate: string;            // ISO pt LocalDateTime
   orderLines: OrderLinePayload[];
-  status?: Status;
+  status: string;
 }
+
 export function nowLocalIso(): string {
-  // dată și oră LOCALĂ "YYYY-MM-DDTHH:mm:ss"
   const d = new Date();
   const pad = (n: number) => n.toString().padStart(2, '0');
 

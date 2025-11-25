@@ -65,7 +65,7 @@ export class CheckoutPageComponent implements OnInit {
     });
   }
 
-  // 🔹 deschide/închide formularul
+  // deschide/închide formularul
   toggleNewAddressForm(): void {
     this.showNewAddressForm = !this.showNewAddressForm;
   }
@@ -99,7 +99,7 @@ export class CheckoutPageComponent implements OnInit {
           city: '',
           street: '',
           zipCode: '',
-          userId: payload.userId   // 👈 păstrăm userId!
+          userId: payload.userId   //  păstrăm userId!
         };
 
         this.showNewAddressForm = false;
@@ -144,14 +144,14 @@ export class CheckoutPageComponent implements OnInit {
     }
 
     const body: OrderRequestPayload = {
-      user: { id: this.userId },
-      deliveryAddress: { id: this.deliveryAddressId },
-      userAddress: this.userAddressId ? { id: this.userAddressId } : undefined,
+      userId: this.userId,                             //  direct id-ul
+      deliveryAddressId: this.deliveryAddressId!,      //  direct id-ul
+      userAddressId: this.userAddressId ?? null,       //  poate fi null
       orderDate: nowLocalIso(),
       status: 'NEW',
       orderLines: this.cart.lines.map(l => ({
         quantity: l.quantity,
-        product: { id: l.product.id! }
+        product: { id: l.product.id! }                 // asta e ok pt backend
       }))
     };
 
@@ -167,7 +167,7 @@ export class CheckoutPageComponent implements OnInit {
       },
       error: (err) => {
         console.error('Eroare creare comandă:', err);
-        alert(err?.error?.message || 'Avem o eroare la trimiterea comenzii. \'Funcționalitatea reală va fi implementată după ce reparăm backend-ul.\'');
+        alert(err?.error?.message || 'Avem o eroare la trimiterea comenzii.');
       }
     });
   }
